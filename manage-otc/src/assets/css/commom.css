@@ -1,0 +1,18 @@
+.mt8{
+	margin-top: 8px;
+}
+.mt16{
+	margin-top: 16px;
+}
+.c-#2d8cf0{
+	color: #2d8cf0;
+}
+.f-l{
+	float: left;
+}
+.f-r{
+	float: right;
+}
+.height300 .ivu-modal-body{
+	height: 300px !important;
+}

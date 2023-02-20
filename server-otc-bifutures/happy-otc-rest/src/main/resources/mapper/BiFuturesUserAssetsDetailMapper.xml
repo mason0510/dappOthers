@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.BiFuturesUserAssetsDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.bifutures.entity.FuturesFundDetail" >
+    <result column="__id" property="id" jdbcType="BIGINT" />
+    <result column="__user_id" property="userId" jdbcType="BIGINT" />
+    <result column="__money" property="money" jdbcType="DECIMAL" />
+    <result column="__balance" property="balance" jdbcType="DECIMAL" />
+    <result column="__type" property="type" jdbcType="INTEGER" />
+    <result column="__explain" property="explain" jdbcType="VARCHAR" />
+    <result column="__detail" property="detail" jdbcType="VARCHAR" />
+    <result column="__source_id" property="sourceId" jdbcType="BIGINT" />
+    <result column="__time" property="time" jdbcType="TIMESTAMP" />
+    <result column="__version" property="version" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="JyzhfResultMap" type="com.happy.otc.bifutures.entity.FuturesJyzhf" >
+    <result column="__money" property="money" jdbcType="DECIMAL" />
+    <result column="__bi_code" property="biCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectJyshf" resultMap="JyzhfResultMap" resultType="list" >
+    SELECT
+    a.__money,
+    b.__bi_code
+    FROM
+    __fu_fund_detail a,
+    __fu_strategy b
+    WHERE
+    a.__type = 2
+    AND a.__explain = "交易综合费支出"
+    AND a.__source_id = b.__id
+    <if test="leSellTime != null">
+      <![CDATA[
+				AND __time>=#{leSellTime}
+				]]>
+    </if>
+    <if test="geSellTime != null">
+      <![CDATA[
+				AND __time<=#{geSellTime}
+				]]>
+    </if>
+  </select>
+  <select id="selectDyf" resultMap="JyzhfResultMap" resultType="list" >
+    SELECT
+    a.__money,
+    b.__bi_code
+    FROM
+    __fu_fund_detail a,
+    __fu_strategy b
+    WHERE
+    a.__type = 2
+    AND a.__explain = "合约交易递延费支出"
+    AND a.__source_id = b.__id
+    <if test="leSellTime != null">
+      <![CDATA[
+				AND __time>=#{leSellTime}
+				]]>
+    </if>
+    <if test="geSellTime != null">
+      <![CDATA[
+				AND __time<=#{geSellTime}
+				]]>
+    </if>
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    *
+    from __fu_fund_detail
+    where __id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectPageByUserId" resultMap="BaseResultMap" parameterType="com.happy.otc.bifutures.pojo.FundDetailQuery" resultType="list" >
+    select
+    *
+    from __fu_fund_detail
+    <include refid="PAGE_WHERE"/>
+    ORDER BY __time DESC
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from __fu_fund_detail
+    where __id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.bifutures.dto.FuturesFundDetailDto" >
+    insert into __fu_fund_detail (__user_id,__money, __balance, __type,
+      __explain, __detail,__source_id,__time)
+    values (#{userId,jdbcType=BIGINT}, #{money,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER},
+      #{explain,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{sourceId,jdbcType=BIGINT}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateAssetsDetail" parameterType="com.happy.otc.bifutures.dto.FuturesFundDetailDto" >
+    update __fu_fund_detail
+    <set >
+      <if test="userId != null" >
+        __user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        __money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        __balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        __type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="explain != null" >
+        __explain = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        __detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null" >
+        __source_id = #{sourceId,jdbcType=BIGINT},
+      </if>
+      <if test="time != null" >
+        __time = #{time,jdbcType=TIMESTAMP},
+      </if>
+
+    </set>
+    where __id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="PAGE_WHERE">
+    <where>
+      <if test="id != null">
+        __id=#{id,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null">
+        AND __user_id=#{userId,jdbcType=BIGINT}
+      </if>
+      <if test="type != null">
+        AND __type=#{type,jdbcType=INTEGER}
+      </if>
+      <if test="explain != null and explain.size()>0">
+        <choose>
+          <when test="explain.size()==1">
+            AND __explain=#{explain[0],jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            AND __explain IN
+            <foreach collection="explain" open="(" close=")" separator="," item="item">
+              #{item,jdbcType=VARCHAR}
+            </foreach>
+          </otherwise>
+        </choose>
+      </if>
+      <if test="requestTimeStart != null">
+        <![CDATA[
+				AND __request_time>=#{requestTimeStart,jdbcType=TIMESTAMP}
+				]]>
+      </if>
+      <if test="requestTimeEnd != null">
+        <![CDATA[
+				AND __request_time<=#{requestTimeEnd,jdbcType=TIMESTAMP}
+				]]>
+      </if>
+      <if test="detail != null">
+        AND __detail LIKE '%'+#{detail,jdbcType=VARCHAR}+'%'
+      </if>
+    </where>
+  </sql>
+  <sql id="PAGE_WHERE_TIME">
+    <where>
+      <if test="leSellTime != null">
+        <![CDATA[
+				AND __time>=#{leSellTime}
+				]]>
+      </if>
+      <if test="geSellTime != null">
+        <![CDATA[
+				AND __time<=#{geSellTime}
+				]]>
+      </if>
+    </where>
+  </sql>
+</mapper>

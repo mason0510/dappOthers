@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.BiFuturesParamMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.bifutures.entity.Params" >
+    <result column="__id" property="id" jdbcType="BIGINT" />
+    <result column="__name" property="name" jdbcType="VARCHAR" />
+    <result column="__value" property="value" jdbcType="VARCHAR" />
+    <result column="__time" property="time" jdbcType="TIMESTAMP" />
+    <result column="__version" property="version" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getAll" resultMap="BaseResultMap" resultType="list">
+    select 
+    *
+    from __fu_param
+  </select>
+  <select id="getByName" resultMap="BaseResultMap" resultType="com.happy.otc.bifutures.entity.Params" parameterType="String" >
+    select
+    *
+    from __fu_param
+    where __name = #{name,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.happy.otc.bifutures.entity.Params" >
+    insert into __fu_param (__name,__value,__time)
+    values (#{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="update" parameterType="com.happy.otc.bifutures.entity.Params" >
+    update __fu_param
+    <set>
+      <if test="name != null">
+        __name=#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        __value=#{value,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        __time=#{time,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    <where>
+      __id=#{id,jdbcType=BIGINT}
+    </where>
+  </update>
+  <sql id="PAGE_WHERE">
+    <where>
+      <if test="id != null">
+        __id=#{id}
+      </if>
+      <if test="userId != null">
+        AND __user_id=#{userId}
+      </if>
+      <if test="type != null">
+        AND __type=#{type}
+      </if>
+      <if test="explain != null and explain.size()>0">
+        <choose>
+          <when test="explain.size()==1">
+            AND __explain=#{explain[0]}
+          </when>
+          <otherwise>
+            AND __explain IN
+            <foreach collection="explain" open="(" close=")" separator="," item="item">
+              #{item}
+            </foreach>
+          </otherwise>
+        </choose>
+      </if>
+      <if test="requestTimeStart != null">
+        <![CDATA[
+				AND __request_time>=#{requestTimeStart}
+				]]>
+      </if>
+      <if test="requestTimeEnd != null">
+        <![CDATA[
+				AND __request_time<=#{requestTimeEnd}
+				]]>
+      </if>
+      <if test="detail != null">
+        AND __detail LIKE '%'+#{detail}+'%'
+      </if>
+    </where>
+  </sql>
+</mapper>

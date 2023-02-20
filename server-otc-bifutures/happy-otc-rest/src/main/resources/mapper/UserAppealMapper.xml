@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.UserAppealMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.UserAppeal" >
+    <id column="appeal_id" property="appealId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="capital_detail_id" property="capitalDetailId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    appeal_id, type, user_id, capital_detail_id, status, reason, detail, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_appeal
+    where appeal_id = #{appealId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_appeal
+    where appeal_id = #{appealId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.UserAppeal" >
+    insert into user_appeal (appeal_id, type, user_id, 
+      capital_detail_id, status, reason, 
+      detail, create_time, update_time
+      )
+    values (#{appealId,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, #{userId,jdbcType=BIGINT}, 
+      #{capitalDetailId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.UserAppeal" >
+    insert into user_appeal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appealId != null" >
+        appeal_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="capitalDetailId != null" >
+        capital_detail_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appealId != null" >
+        #{appealId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="capitalDetailId != null" >
+        #{capitalDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.UserAppeal" >
+    update user_appeal
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="capitalDetailId != null" >
+        capital_detail_id = #{capitalDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where appeal_id = #{appealId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.UserAppeal" >
+    update user_appeal
+    set type = #{type,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      capital_detail_id = #{capitalDetailId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where appeal_id = #{appealId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from user_appeal
+    <where>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="type != null">
+        and type = #{type,jdbcType=TINYINT}
+      </if>
+      <if test="capitalDetailId != null">
+        and capital_detail_id = #{capitalDetailId,jdbcType=BIGINT}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  <select id="selectLastAppealByUserIdAndCapitalDetailId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_appeal
+    where user_id = #{userId}
+    and capital_detail_id = #{capitalDetailId}
+    order by appeal_id desc
+    limit 1
+  </select>
+
+  <select id="selectInfoByParam" parameterType="java.util.Map" resultType="com.happy.otc.vo.UserAppealInfoVO" >
+    select
+      ua.appeal_id appealId, ua.user_id appealUserId, ua.type appealType, ua.reason appealReason, ua.status appealStatus, ua.create_time appealTime,
+      cd.buy_user_id buyUserId, cd.sell_user_id sellUserId, cd.capital_detail_id capitalDetailId, cd.transaction_amount transactionAmount,
+      cd.transaction_volume transactionVolume, cd.pay_time payTime, cd.order_number orderNumber,
+      co.commodity_id commodityId, co.currency_price currencyPrice, co.kind, co.commodity_type commodityType
+    from user_appeal ua
+    inner join capital_detail cd on ua.capital_detail_id = cd.capital_detail_id
+    inner join commodity co on cd.commodity_id = co.commodity_id
+    <where>
+      <if test="userId != null">
+        ua.user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="type != null">
+        and ua.type = #{type,jdbcType=TINYINT}
+      </if>
+      <if test="capitalDetailId != null">
+        and ua.capital_detail_id = #{capitalDetailId,jdbcType=BIGINT}
+      </if>
+      <if test="status != null">
+        and ua.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="orderNumber != null and orderNumber != ''">
+        and cd.order_number = #{orderNumber,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>

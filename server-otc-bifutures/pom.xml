@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.happy</groupId>
+    <artifactId>happy-otc</artifactId>
+
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>happy-otc-pojo</module>
+        <module>happy-otc-rest</module>
+        <module>happy-btc</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.bitan</groupId>
+            <artifactId>bitan-common</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bitcoinj</groupId>
+            <artifactId>bitcoinj-core</artifactId>
+            <version>0.14.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <bootstrap.servers>115.231.223.139:9092</bootstrap.servers>
+                <eureka.url>http://localhost:8775/eureka/</eureka.url>
+                <spring.cloud.config.profile>dev</spring.cloud.config.profile>
+                <spring.cloud.config.url>http://localhost:8776</spring.cloud.config.url>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <bootstrap.servers>115.231.223.139:9092</bootstrap.servers>
+                <eureka.url>http://localhost:8775/eureka/</eureka.url>
+                <spring.cloud.config.profile>test</spring.cloud.config.profile>
+                <spring.cloud.config.url>http://localhost:8776</spring.cloud.config.url>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <properties>
+                <bootstrap.servers>127.0.0.1:9092</bootstrap.servers>
+                <spring.cloud.config.profile>pro</spring.cloud.config.profile>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>pe</id>
+            <properties>
+                <bootstrap.servers>172.31.243.108:9092</bootstrap.servers>
+                <eureka.url>http://localhost:8775/eureka/</eureka.url>
+                <spring.cloud.config.profile>pe</spring.cloud.config.profile>
+                <spring.cloud.config.url>http://localhost:8776</spring.cloud.config.url>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

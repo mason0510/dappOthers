@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.UserCurrencyAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.UserCurrencyAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="user_address_id" property="userAddressId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <resultMap id="DeatilResultMap" type="com.happy.otc.dto.UserCurrencyAddressDTO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="currency_simple_name" property="currencySimpleName" jdbcType="VARCHAR" />
+    <result column="user_address_id" property="userAddressId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, address, detail, user_id, currency_id,user_address_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_currency_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_currency_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.UserCurrencyAddress" >
+    insert into user_currency_address (id, address, detail, 
+      user_id, currency_id,user_address_id, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{currencyId,jdbcType=BIGINT}, #{userAddressId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.UserCurrencyAddress" >
+    insert into user_currency_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="userAddressId != null" >
+        user_address_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="userAddressId != null" >
+        #{userAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.UserCurrencyAddress" >
+    update user_currency_address
+    <set >
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="userAddressId != null" >
+        user_address_id =  #{userAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.UserCurrencyAddress" >
+    update user_currency_address
+    set address = #{address,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByParam" resultMap="DeatilResultMap" parameterType="java.util.Map" >
+    select
+    c.id, c.address, c.detail, c.user_id, c.currency_id,c.user_address_id, c.create_time, cy.currency_simple_name
+    FROM
+    user_currency_address c
+    LEFT JOIN currency cy ON c.currency_id = cy.currency_id
+    WHERE 1 = 1
+    <if test="currencyId != null" >
+      and  c.currency_id = #{currencyId}
+    </if>
+    <if test="userId != null" >
+      and c.user_id = #{userId}
+    </if>
+    <if test="address != null" >
+      and  c.address = #{address}
+    </if>
+  </select>
+
+
+  <select id="selectCollectAddressByParam" resultMap="DeatilResultMap" parameterType="java.util.Map" >
+
+    SELECT  c.id, c.address, c.detail, c.user_id, c.currency_id,c.user_address_id, c.create_time
+    FROM
+    (SELECT user_id from capital_log
+    WHERE currency_id = #{currencyId}
+    and type = 3
+    <if test="createTime != null" >
+      and create_time >= #{createTime}
+    </if>
+    GROUP BY user_id ) clog  LEFT JOIN user_currency_address c
+    ON clog.user_id = c.user_id
+    AND c.currency_id = #{currencyId}
+
+  </select>
+</mapper>

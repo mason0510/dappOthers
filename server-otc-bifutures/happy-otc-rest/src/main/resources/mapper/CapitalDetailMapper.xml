@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.CapitalDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.CapitalDetail" >
+    <id column="capital_detail_id" property="capitalDetailId" jdbcType="BIGINT" />
+    <result column="buy_user_id" property="buyUserId" jdbcType="BIGINT" />
+    <result column="sell_user_id" property="sellUserId" jdbcType="BIGINT" />
+    <result column="commodity_id" property="commodityId" jdbcType="BIGINT" />
+    <result column="commodity_type" property="commodityType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL" />
+    <result column="transaction_volume" property="transactionVolume" jdbcType="DECIMAL" />
+    <result column="transaction_price" property="transactionPrice" jdbcType="DECIMAL" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="crate_time" property="crateTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="reference_number" property="referenceNumber" jdbcType="VARCHAR" />
+    <result column="easemob_group_id" property="easemobGroupId" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="relevant_kind" property="relevantKind" jdbcType="VARCHAR" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="DeatilResultMap" type="com.happy.otc.vo.CapitalDetailInfoVO" >
+    <id column="capital_detail_id" property="capitalDetailId" jdbcType="BIGINT" />
+    <result column="buy_user_id" property="buyUserId" jdbcType="BIGINT" />
+    <result column="sell_user_id" property="sellUserId" jdbcType="BIGINT" />
+    <result column="commodity_id" property="commodityId" jdbcType="BIGINT" />
+    <result column="commodity_type" property="commodityType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL" />
+    <result column="transaction_volume" property="transactionVolume" jdbcType="DECIMAL" />
+    <result column="transaction_price" property="transactionPrice" jdbcType="DECIMAL" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="crate_time" property="crateTime" jdbcType="TIMESTAMP" />
+    <result column="currency_price" property="currencyPrice" jdbcType="DECIMAL" />
+    <result column="commodity_type" property="commodityType" jdbcType="INTEGER" />
+    <result column="reference_number" property="referenceNumber" jdbcType="VARCHAR" />
+    <result column="easemob_group_id" property="easemobGroupId" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="relevant_kind" property="relevantKind" jdbcType="VARCHAR" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="leave_message" property="leaveMessage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    capital_detail_id, buy_user_id, sell_user_id, commodity_id, commodity_type, status, 
+    transaction_amount, transaction_volume, transaction_price, order_number, crate_time,
+    update_time, pay_time, reference_number, easemob_group_id, currency_id, relevant_kind,
+    service_fee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from capital_detail
+    where capital_detail_id = #{capitalDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from capital_detail
+    where capital_detail_id = #{capitalDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.CapitalDetail" >
+    insert into capital_detail (capital_detail_id, buy_user_id, sell_user_id, 
+      commodity_id, commodity_type, status, 
+      transaction_amount, transaction_volume, transaction_price,
+      order_number, crate_time, update_time,
+      pay_time, reference_number, easemob_group_id,
+      currency_id, relevant_kind, service_fee
+      )
+    values (#{capitalDetailId,jdbcType=BIGINT}, #{buyUserId,jdbcType=BIGINT}, #{sellUserId,jdbcType=BIGINT}, 
+      #{commodityId,jdbcType=BIGINT}, #{commodityType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{transactionAmount,jdbcType=DECIMAL}, #{transactionVolume,jdbcType=DECIMAL}, #{transactionPrice,jdbcType=DECIMAL},
+      #{orderNumber,jdbcType=VARCHAR}, #{crateTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{payTime,jdbcType=TIMESTAMP}, #{referenceNumber,jdbcType=VARCHAR}, #{easemobGroupId,jdbcType=VARCHAR},
+      #{currencyId,jdbcType=BIGINT}, #{relevantKind,jdbcType=VARCHAR}, #{serviceFee,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.CapitalDetail"
+          keyProperty="capitalDetailId" useGeneratedKeys="true">
+    insert into capital_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="capitalDetailId != null" >
+        capital_detail_id,
+      </if>
+      <if test="buyUserId != null" >
+        buy_user_id,
+      </if>
+      <if test="sellUserId != null" >
+        sell_user_id,
+      </if>
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="commodityType != null" >
+        commodity_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="transactionAmount != null" >
+        transaction_amount,
+      </if>
+      <if test="transactionVolume != null" >
+        transaction_volume,
+      </if>
+      <if test="transactionPrice != null" >
+        transaction_price,
+      </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+      <if test="crateTime != null" >
+        crate_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="referenceNumber != null" >
+        reference_number,
+      </if>
+      <if test="easemobGroupId != null" >
+        easemob_group_id,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="relevantKind != null" >
+        relevant_kind,
+      </if>
+      <if test="serviceFee != null" >
+        service_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="capitalDetailId != null" >
+        #{capitalDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="buyUserId != null" >
+        #{buyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sellUserId != null" >
+        #{sellUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityType != null" >
+        #{commodityType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="transactionAmount != null" >
+        #{transactionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionVolume != null" >
+        #{transactionVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionPrice != null" >
+        #{transactionPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="crateTime != null" >
+        #{crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="referenceNumber != null" >
+        #{referenceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="easemobGroupId != null" >
+        #{easemobGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="relevantKind != null" >
+        #{relevantKind,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFee != null" >
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.CapitalDetail" >
+    update capital_detail
+    <set >
+      <if test="buyUserId != null" >
+        buy_user_id = #{buyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sellUserId != null" >
+        sell_user_id = #{sellUserId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityId != null" >
+        commodity_id = #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityType != null" >
+        commodity_type = #{commodityType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="transactionAmount != null" >
+        transaction_amount = #{transactionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionVolume != null" >
+        transaction_volume = #{transactionVolume,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionPrice != null" >
+        transaction_price = #{transactionPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="crateTime != null" >
+        crate_time = #{crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="referenceNumber != null" >
+        reference_number = #{referenceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="easemobGroupId != null" >
+        easemob_group_id = #{easemobGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="relevantKind != null" >
+        relevant_kind = #{relevantKind,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFee != null" >
+        service_fee = #{serviceFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where capital_detail_id = #{capitalDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.CapitalDetail" >
+    update capital_detail
+    set buy_user_id = #{buyUserId,jdbcType=BIGINT},
+      sell_user_id = #{sellUserId,jdbcType=BIGINT},
+      commodity_id = #{commodityId,jdbcType=BIGINT},
+      commodity_type = #{commodityType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      transaction_amount = #{transactionAmount,jdbcType=DECIMAL},
+      transaction_volume = #{transactionVolume,jdbcType=DECIMAL},
+      transaction_price = #{transactionPrice,jdbcType=DECIMAL},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      crate_time = #{crateTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      reference_number = #{referenceNumber,jdbcType=VARCHAR},
+      easemob_group_id = #{easemobGroupId,jdbcType=VARCHAR},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      relevant_kind = #{relevantKind,jdbcType=VARCHAR},
+      service_fee = #{serviceFee,jdbcType=DECIMAL}
+    where capital_detail_id = #{capitalDetailId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByParam" resultMap="DeatilResultMap" parameterType="java.util.Map" >
+    select
+    c.capital_detail_id,c.buy_user_id, c.sell_user_id, c.commodity_id, c.status, c.transaction_amount,
+    c.transaction_volume, c.crate_time,c.relevant_kind, cy.currency_price, cy.leave_message, cy.kind, c.update_time,
+    cy.commodity_type,c.order_number, c.pay_time,c.reference_number, c.easemob_group_id, c.service_fee,
+    c.transaction_price
+    FROM
+        capital_detail c
+    LEFT JOIN commodity cy
+    ON cy.commodity_id = c.commodity_id
+    where 1 = 1
+    <if test="capitalDetailId!=null">
+      AND c.capital_detail_id = #{capitalDetailId}
+    </if>
+    <if test="status!=null and status != 7">
+      AND c.status = #{status}
+    </if>
+    <if test="status!=null and status == 7">
+      AND (c.status = 1
+      or c.status = 2
+      or c.status = 3 )
+    </if>
+    <if test="userId!=null">
+      AND (c.buy_user_id = #{userId}
+      or c.sell_user_id = #{userId})
+    </if>
+    ORDER BY c.update_time DESC
+  </select>
+</mapper>

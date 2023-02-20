@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.CurrencyMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.Currency" >
+    <id column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="currency_chinese_name" property="currencyChineseName" jdbcType="VARCHAR" />
+    <result column="currency_english_name" property="currencyEnglishName" jdbcType="VARCHAR" />
+    <result column="currency_simple_name" property="currencySimpleName" jdbcType="VARCHAR" />
+    <result column="contract_address" property="contractAddress" jdbcType="VARCHAR" />
+    <result column="is_show_index" property="isShowIndex" jdbcType="INTEGER" />
+    <result column="last_offset" property="lastOffset" jdbcType="BIGINT" />
+    <result column="last_address_number" property="lastAddressNumber" jdbcType="BIGINT" />
+    <result column="decimals" property="decimals" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    currency_id, currency_chinese_name, currency_english_name, currency_simple_name, contract_address,
+    is_show_index, last_offset, decimals, last_address_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from currency
+    where currency_id = #{currencyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from currency
+    where currency_id = #{currencyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.Currency" >
+    insert into currency (currency_id, currency_chinese_name, currency_english_name,
+      currency_simple_name, is_show_index, last_offset, decimals,
+      last_address_number)
+    values (#{currencyId,jdbcType=BIGINT}, #{currencyChineseName,jdbcType=VARCHAR}, #{currencyEnglishName,jdbcType=VARCHAR},
+      #{currencySimpleName,jdbcType=VARCHAR}, #{isShowIndex,jdbcType=INTEGER}, #{lastOffset,jdbcType=BIGINT}, #{decimals,jdbcType=INTEGER},
+      #{lastAddressNumber,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.Currency" >
+    insert into currency
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="currencyChineseName != null" >
+        currency_chinese_name,
+      </if>
+      <if test="currencyEnglishName != null" >
+        currency_english_name,
+      </if>
+      <if test="currencySimpleName != null" >
+        currency_simple_name,
+      </if>
+      <if test="isShowIndex != null" >
+        is_show_index,
+      </if>
+      <if test="lastOffset != null" >
+        last_offset,
+      </if>
+      <if test="lastAddressNumber != null" >
+        last_address_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyChineseName != null" >
+        #{currencyChineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyEnglishName != null" >
+        #{currencyEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="currencySimpleName != null" >
+        #{currencySimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="isShowIndex != null" >
+        #{isShowIndex,jdbcType=INTEGER},
+      </if>
+      <if test="lastOffset != null" >
+        #{lastOffset,jdbcType=BIGINT},
+      </if>
+      <if test="lastAddressNumber != null" >
+        #{lastAddressNumber,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.Currency" >
+    update currency
+    <set >
+      <if test="currencyChineseName != null" >
+        currency_chinese_name = #{currencyChineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyEnglishName != null" >
+        currency_english_name = #{currencyEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="currencySimpleName != null" >
+        currency_simple_name = #{currencySimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="isShowIndex != null" >
+        is_show_index = #{isShowIndex,jdbcType=INTEGER},
+      </if>
+      <if test="lastOffset != null" >
+        last_offset = #{lastOffset,jdbcType=BIGINT},
+      </if>
+      <if test="lastAddressNumber != null" >
+        last_address_number = #{lastAddressNumber,jdbcType=BIGINT},
+      </if>
+    </set>
+    where currency_id = #{currencyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.Currency" >
+    update currency
+    set currency_chinese_name = #{currencyChineseName,jdbcType=VARCHAR},
+      currency_english_name = #{currencyEnglishName,jdbcType=VARCHAR},
+      currency_simple_name = #{currencySimpleName,jdbcType=VARCHAR},
+      is_show_index = #{isShowIndex,jdbcType=INTEGER},
+      last_offset = #{lastOffset,jdbcType=BIGINT},
+      last_address_number = #{lastAddressNumber,jdbcType=BIGINT}
+    where currency_id = #{currencyId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectByPrarm" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from currency
+  </select>
+</mapper>

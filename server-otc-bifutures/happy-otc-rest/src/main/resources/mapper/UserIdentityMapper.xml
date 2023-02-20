@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.UserIdentityMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.UserIdentity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="document_type" property="documentType" jdbcType="TINYINT" />
+    <result column="identity_number" property="identityNumber" jdbcType="VARCHAR" />
+    <result column="image_address1" property="imageAddress1" jdbcType="VARCHAR" />
+    <result column="image_address2" property="imageAddress2" jdbcType="VARCHAR" />
+    <result column="image_address3" property="imageAddress3" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="capital_cipher" property="capitalCipher" jdbcType="VARCHAR" />
+    <result column="pay_method_list" property="payMethodList" jdbcType="VARCHAR" />
+    <result column="user_otc_type" property="userOtcType" jdbcType="TINYINT" />
+    <result column="language_type" property="languageType" jdbcType="TINYINT" />
+    <result column="other_reason" property="otherReason" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="IdentityResultMap" type="com.happy.otc.vo.UserIdentityVO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="document_type" property="documentType" jdbcType="TINYINT" />
+    <result column="identity_number" property="identityNumber" jdbcType="VARCHAR" />
+    <result column="image_address1" property="imageAddress1" jdbcType="VARCHAR" />
+    <result column="image_address2" property="imageAddress2" jdbcType="VARCHAR" />
+    <result column="image_address3" property="imageAddress3" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_otc_type" property="userOtcType" jdbcType="TINYINT" />
+    <result column="other_reason" property="otherReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, real_name, document_type, identity_number, image_address1, image_address2, image_address3, 
+    user_id, status, reject_reason, create_time, capital_cipher, pay_method_list, user_otc_type, 
+    language_type, other_reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_identity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_identity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.UserIdentity"
+          keyProperty="id" useGeneratedKeys="true">
+    insert into user_identity (id, real_name, document_type, 
+      identity_number, image_address1, image_address2, 
+      image_address3, user_id, status, 
+      reject_reason, create_time, capital_cipher, 
+      pay_method_list, user_otc_type, language_type, 
+      other_reason)
+    values (#{id,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR}, #{documentType,jdbcType=TINYINT}, 
+      #{identityNumber,jdbcType=VARCHAR}, #{imageAddress1,jdbcType=VARCHAR}, #{imageAddress2,jdbcType=VARCHAR}, 
+      #{imageAddress3,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+      #{rejectReason,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{capitalCipher,jdbcType=VARCHAR}, 
+      #{payMethodList,jdbcType=VARCHAR}, #{userOtcType,jdbcType=TINYINT}, #{languageType,jdbcType=TINYINT}, 
+      #{otherReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.UserIdentity"
+          keyProperty="id" useGeneratedKeys="true">
+    insert into user_identity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="documentType != null" >
+        document_type,
+      </if>
+      <if test="identityNumber != null" >
+        identity_number,
+      </if>
+      <if test="imageAddress1 != null" >
+        image_address1,
+      </if>
+      <if test="imageAddress2 != null" >
+        image_address2,
+      </if>
+      <if test="imageAddress3 != null" >
+        image_address3,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="capitalCipher != null" >
+        capital_cipher,
+      </if>
+      <if test="payMethodList != null" >
+        pay_method_list,
+      </if>
+      <if test="userOtcType != null" >
+        user_otc_type,
+      </if>
+      <if test="languageType != null" >
+        language_type,
+      </if>
+      <if test="otherReason != null" >
+        other_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="documentType != null" >
+        #{documentType,jdbcType=TINYINT},
+      </if>
+      <if test="identityNumber != null" >
+        #{identityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddress1 != null" >
+        #{imageAddress1,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddress2 != null" >
+        #{imageAddress2,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddress3 != null" >
+        #{imageAddress3,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="rejectReason != null" >
+        #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="capitalCipher != null" >
+        #{capitalCipher,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethodList != null" >
+        #{payMethodList,jdbcType=VARCHAR},
+      </if>
+      <if test="userOtcType != null" >
+        #{userOtcType,jdbcType=TINYINT},
+      </if>
+      <if test="languageType != null" >
+        #{languageType,jdbcType=TINYINT},
+      </if>
+      <if test="otherReason != null" >
+        #{otherReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.UserIdentity" >
+    update user_identity
+    <set >
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="documentType != null" >
+        document_type = #{documentType,jdbcType=TINYINT},
+      </if>
+      <if test="identityNumber != null" >
+        identity_number = #{identityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddress1 != null" >
+        image_address1 = #{imageAddress1,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddress2 != null" >
+        image_address2 = #{imageAddress2,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddress3 != null" >
+        image_address3 = #{imageAddress3,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="capitalCipher != null" >
+        capital_cipher = #{capitalCipher,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethodList != null" >
+        pay_method_list = #{payMethodList,jdbcType=VARCHAR},
+      </if>
+      <if test="userOtcType != null" >
+        user_otc_type = #{userOtcType,jdbcType=TINYINT},
+      </if>
+      <if test="languageType != null" >
+        language_type = #{languageType,jdbcType=TINYINT},
+      </if>
+      <if test="otherReason != null" >
+        other_reason = #{otherReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.UserIdentity" >
+    update user_identity
+    set real_name = #{realName,jdbcType=VARCHAR},
+      document_type = #{documentType,jdbcType=TINYINT},
+      identity_number = #{identityNumber,jdbcType=VARCHAR},
+      image_address1 = #{imageAddress1,jdbcType=VARCHAR},
+      image_address2 = #{imageAddress2,jdbcType=VARCHAR},
+      image_address3 = #{imageAddress3,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      capital_cipher = #{capitalCipher,jdbcType=VARCHAR},
+      pay_method_list = #{payMethodList,jdbcType=VARCHAR},
+      user_otc_type = #{userOtcType,jdbcType=TINYINT},
+      language_type = #{languageType,jdbcType=TINYINT},
+      other_reason = #{otherReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByParam" resultMap="IdentityResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from user_identity
+    <where>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="notUserId != null">
+        user_id != #{notUserId,jdbcType=BIGINT}
+      </if>
+      <if test="identityNumber != null">
+        and identity_number = #{identityNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="userOtcType != null">
+        and user_otc_type = #{userOtcType,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
+
+    <select id="selectByParam2" resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select
+        <include refid="Base_Column_List" />
+        from user_identity
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="identityNumber != null">
+                and identity_number = #{identityNumber,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+  <update id="addSeller" >
+    update user_identity
+    set user_otc_type = 1
+    where user_id in
+    <foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+</mapper>

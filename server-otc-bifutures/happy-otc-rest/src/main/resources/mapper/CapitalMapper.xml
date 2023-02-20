@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.CapitalMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.Capital" >
+    <id column="capital_id" property="capitalId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="capital_balance" property="capitalBalance" jdbcType="DECIMAL" />
+    <result column="capital_available" property="capitalAvailable" jdbcType="DECIMAL" />
+    <result column="capital_frozen" property="capitalFrozen" jdbcType="DECIMAL" />
+    <result column="capital_In" property="capitalIn" jdbcType="DECIMAL" />
+    <result column="capital_out" property="capitalOut" jdbcType="DECIMAL" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="DeatilResultMap" type="com.happy.otc.vo.CapitalInfoVO" >
+    <id column="capital_id" property="capitalId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="capital_balance" property="capitalBalance" jdbcType="DECIMAL" />
+    <result column="capital_available" property="capitalAvailable" jdbcType="DECIMAL" />
+    <result column="capital_frozen" property="capitalFrozen" jdbcType="DECIMAL" />
+    <result column="capital_In" property="capitalIn" jdbcType="DECIMAL" />
+    <result column="capital_out" property="capitalOut" jdbcType="DECIMAL" />
+    <result column="currency_simple_name" property="currencySimpleName" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    capital_id, user_id, currency_id, capital_balance, capital_available, capital_frozen, 
+    capital_In, capital_out, version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from capital
+    where capital_id = #{capitalId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from capital
+    where capital_id = #{capitalId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.Capital" >
+    insert into capital (capital_id, user_id, currency_id, 
+      capital_balance, capital_available, capital_frozen, 
+      capital_In, capital_out, version
+      )
+    values (#{capitalId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{currencyId,jdbcType=BIGINT}, 
+      #{capitalBalance,jdbcType=DECIMAL}, #{capitalAvailable,jdbcType=DECIMAL}, #{capitalFrozen,jdbcType=DECIMAL}, 
+      #{capitalIn,jdbcType=DECIMAL}, #{capitalOut,jdbcType=DECIMAL}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.Capital" >
+    insert into capital
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="capitalId != null" >
+        capital_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="capitalBalance != null" >
+        capital_balance,
+      </if>
+      <if test="capitalAvailable != null" >
+        capital_available,
+      </if>
+      <if test="capitalFrozen != null" >
+        capital_frozen,
+      </if>
+      <if test="capitalIn != null" >
+        capital_In,
+      </if>
+      <if test="capitalOut != null" >
+        capital_out,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="capitalId != null" >
+        #{capitalId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="capitalBalance != null" >
+        #{capitalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalAvailable != null" >
+        #{capitalAvailable,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalFrozen != null" >
+        #{capitalFrozen,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalIn != null" >
+        #{capitalIn,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalOut != null" >
+        #{capitalOut,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.Capital" >
+    update capital
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="capitalBalance != null" >
+        capital_balance = #{capitalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalAvailable != null" >
+        capital_available = #{capitalAvailable,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalFrozen != null" >
+        capital_frozen = #{capitalFrozen,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalIn != null" >
+        capital_In = #{capitalIn,jdbcType=DECIMAL},
+      </if>
+      <if test="capitalOut != null" >
+        capital_out = #{capitalOut,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null" >
+        version = #{version} + 1,
+      </if>
+    </set>
+    where capital_id = #{capitalId,jdbcType=BIGINT}
+      and version = #{version,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.Capital" >
+    update capital
+    set user_id = #{userId,jdbcType=BIGINT},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      capital_balance = #{capitalBalance,jdbcType=DECIMAL},
+      capital_available = #{capitalAvailable,jdbcType=DECIMAL},
+      capital_frozen = #{capitalFrozen,jdbcType=DECIMAL},
+      capital_In = #{capitalIn,jdbcType=DECIMAL},
+      capital_out = #{capitalOut,jdbcType=DECIMAL},
+      version = #{version,jdbcType=INTEGER}
+    where capital_id = #{capitalId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByParam" resultMap="DeatilResultMap" parameterType="java.util.Map" >
+    SELECT
+     c.capital_id, c.user_id, c.currency_id, c.capital_balance, c.capital_available, c.capital_frozen,
+      cy.currency_simple_name,c.version
+    FROM
+    capital c
+    LEFT JOIN currency cy ON c.currency_id = cy.currency_id
+    WHERE c.user_id = #{userId}
+    <if test="currencyId != null" >
+      and  c.currency_id = #{currencyId}
+    </if>
+  </select>
+</mapper>

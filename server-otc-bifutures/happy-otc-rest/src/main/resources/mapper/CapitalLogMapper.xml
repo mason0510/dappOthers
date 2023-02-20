@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.CapitalLogMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.CapitalLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="frozen_number" property="frozenNumber" jdbcType="DECIMAL" />
+    <result column="available_number" property="availableNumber" jdbcType="DECIMAL" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ExtendResultMap" type="com.happy.otc.vo.CapitalLogInfoVO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="frozen_number" property="frozenNumber" jdbcType="DECIMAL" />
+    <result column="available_number" property="availableNumber" jdbcType="DECIMAL" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, currency_id, type, frozen_number, available_number, comment, order_id, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from capital_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from capital_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.CapitalLog" >
+    insert into capital_log (id, user_id, currency_id, 
+      type, frozen_number, available_number, 
+      comment, order_id, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{currencyId,jdbcType=BIGINT}, 
+      #{type,jdbcType=TINYINT}, #{frozenNumber,jdbcType=DECIMAL}, #{availableNumber,jdbcType=DECIMAL}, 
+      #{comment,jdbcType=VARCHAR}, #{orderId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.CapitalLog" >
+    insert into capital_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="frozenNumber != null" >
+        frozen_number,
+      </if>
+      <if test="availableNumber != null" >
+        available_number,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="frozenNumber != null" >
+        #{frozenNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="availableNumber != null" >
+        #{availableNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.CapitalLog" >
+    update capital_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="frozenNumber != null" >
+        frozen_number = #{frozenNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="availableNumber != null" >
+        available_number = #{availableNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.CapitalLog" >
+    update capital_log
+    set user_id = #{userId,jdbcType=BIGINT},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      type = #{type,jdbcType=TINYINT},
+      frozen_number = #{frozenNumber,jdbcType=DECIMAL},
+      available_number = #{availableNumber,jdbcType=DECIMAL},
+      comment = #{comment,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByParam" parameterType="java.util.Map" resultMap="ExtendResultMap">
+    select
+    cl.id, cl.user_id, cl.currency_id, cl.type, cl.frozen_number, cl.available_number, cl.comment, cl.order_id,
+    cl.create_time, c.currency_simple_name kind
+    from capital_log cl
+    inner join currency c on cl.currency_id = c.currency_id
+    <where>
+      <if test="userId != null">
+        cl.user_id = #{userId}
+      </if>
+      <if test="types != null and types.size() > 0">
+        and cl.type in
+        <foreach item="item" index="index" collection="types"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="start != null">
+        and cl.create_time >= #{start}
+      </if>
+      <if test="end != null">
+        and cl.create_time <![CDATA[ <= ]]> #{end}
+      </if>
+      <if test="currencyId != null">
+        and cl.currency_id = #{currencyId}
+      </if>
+    </where>
+    order by cl.create_time desc
+  </select>
+</mapper>

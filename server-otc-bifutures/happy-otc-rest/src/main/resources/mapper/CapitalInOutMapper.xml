@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.CapitalInOutMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.CapitalInOut" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="number_coins" property="numberCoins" jdbcType="DECIMAL" />
+    <result column="currency_address" property="currencyAddress" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="DeatilResultMap" type="com.happy.otc.dto.CapitalInOutDTO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="number_coins" property="numberCoins" jdbcType="DECIMAL" />
+    <result column="currency_address" property="currencyAddress" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="currency_simple_name" property="currencySimpleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, currency_id, number_coins, currency_address, transaction_id, type, status, 
+    create_time, send_time, service_fee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from capital_in_out
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from capital_in_out
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.CapitalInOut" >
+    insert into capital_in_out (id, user_id, currency_id, 
+      number_coins, currency_address, transaction_id, 
+      type, status, create_time, 
+      send_time, service_fee)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{currencyId,jdbcType=BIGINT}, 
+      #{numberCoins,jdbcType=DECIMAL}, #{currencyAddress,jdbcType=VARCHAR}, #{transactionId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{serviceFee,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.CapitalInOut"
+          keyProperty="id" useGeneratedKeys="true">
+    insert into capital_in_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="numberCoins != null" >
+        number_coins,
+      </if>
+      <if test="currencyAddress != null" >
+        currency_address,
+      </if>
+      <if test="transactionId != null" >
+        transaction_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="serviceFee != null" >
+        service_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="numberCoins != null" >
+        #{numberCoins,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyAddress != null" >
+        #{currencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceFee != null" >
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.CapitalInOut" >
+    update capital_in_out
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="numberCoins != null" >
+        number_coins = #{numberCoins,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyAddress != null" >
+        currency_address = #{currencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceFee != null" >
+        service_fee = #{serviceFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.CapitalInOut" >
+    update capital_in_out
+    set user_id = #{userId,jdbcType=BIGINT},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      number_coins = #{numberCoins,jdbcType=DECIMAL},
+      currency_address = #{currencyAddress,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      service_fee = #{serviceFee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectByParam" resultMap="DeatilResultMap" parameterType="java.util.Map" >
+
+    select
+    c.id, c.user_id, c.currency_id, c.number_coins, c.currency_address, c.type, c.status, c.create_time,
+    c.send_time, c.service_fee, cy.currency_simple_name
+    FROM
+    capital_in_out c
+    LEFT JOIN currency cy ON c.currency_id = cy.currency_id
+    <where>
+    <if test="userId != null" >
+     c.user_id = #{userId}
+    </if>
+    <if test="currencyId != null" >
+      and  c.currency_id = #{currencyId}
+    </if>
+    <if test="type != null" >
+      and c.type = #{type}
+    </if>
+    <if test="status != null" >
+      and c.status = #{status}
+    </if>
+    </where>
+     ORDER BY c.id DESC
+  </select>
+</mapper>

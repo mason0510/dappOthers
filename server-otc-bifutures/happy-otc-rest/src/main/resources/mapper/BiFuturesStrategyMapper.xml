@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.BiFuturesStrategyMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.bifutures.entity.FuturesStrategy" >
+    <result column="__id" property="id" jdbcType="BIGINT" />
+    <result column="__user_id" property="userId" jdbcType="BIGINT" />
+    <result column="__username" property="userName" jdbcType="VARCHAR" />
+    <result column="__bi_code" property="biCode" jdbcType="VARCHAR" />
+    <result column="__buy_price_order" property="buyPriceOrder" jdbcType="DECIMAL" />
+    <result column="__buy_price_deal" property="buyPriceDeal" jdbcType="DECIMAL" />
+    <result column="__sell_price_deal" property="sellPriceDeal" jdbcType="DECIMAL" />
+    <result column="__contractValue" property="contractValue" jdbcType="DECIMAL" />
+    <result column="__amount" property="amount" jdbcType="BIGINT" />
+    <result column="__type" property="type" jdbcType="INTEGER" />
+    <result column="__status" property="status" jdbcType="INTEGER" />
+    <result column="__mold" property="mold" jdbcType="INTEGER" />
+    <result column="__direction" property="direction" jdbcType="VARCHAR" />
+    <result column="__principal" property="principal" jdbcType="DECIMAL" />
+    <result column="__gain_price" property="gainPrice" jdbcType="DECIMAL" />
+    <result column="__loss_price" property="lossPrice" jdbcType="DECIMAL" />
+    <result column="__close_price" property="closePrice" jdbcType="DECIMAL" />
+    <result column="__service_charge" property="serviceCharge" jdbcType="DECIMAL" />
+    <result column="__defer_charge" property="deferCharge" jdbcType="DECIMAL" />
+    <result column="__is_defer" property="isDefer" jdbcType="INTEGER" />
+    <result column="__is_today" property="isToday" jdbcType="INTEGER" />
+    <result column="__close_reason" property="closeReason" jdbcType="VARCHAR" />
+    <result column="__cancel_reason" property="cancelReason" jdbcType="VARCHAR" />
+    <result column="__buy_deal_time" property="buyDealTime" jdbcType="TIMESTAMP" />
+    <result column="__buy_order_time" property="buyOrderTime" jdbcType="TIMESTAMP" />
+    <result column="__sell_deal_time" property="sellDealTime" jdbcType="TIMESTAMP" />
+    <result column="__cancel_time" property="cancelTime" jdbcType="TIMESTAMP" />
+    <result column="__remark" property="remark" jdbcType="VARCHAR" />
+    <result column="__version" property="version" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    *
+    from __fu_strategy
+    where __id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectPageByUserId" resultMap="BaseResultMap" parameterType="com.happy.otc.bifutures.pojo.FuturesStrategyQuery" resultType="list" >
+    select
+    *
+    from __fu_strategy
+    <include refid="PAGE_WHERE"/>
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="com.happy.otc.bifutures.pojo.FuturesStrategyQuery" resultType="list" >
+    select
+    *
+    from __fu_strategy
+    <include refid="PAGE_WHERE"/>
+
+      ORDER BY __buy_order_time DESC,__id ASC
+
+  </select>
+  <select id="selectOrder" resultMap="BaseResultMap" parameterType="com.happy.otc.bifutures.pojo.FuturesStrategyQuery" resultType="list" >
+    select
+    *
+    from __fu_strategy
+    <include refid="PAGE_WHERE"/>
+
+    ORDER BY __buy_order_time DESC
+
+  </select>
+  <select id="selectBuyDeal" resultMap="BaseResultMap" parameterType="com.happy.otc.bifutures.pojo.FuturesStrategyQuery" resultType="list" >
+    select
+    *
+    from __fu_strategy
+    <include refid="PAGE_WHERE"/>
+
+    ORDER BY __buy_deal_time DESC
+
+  </select>
+  <select id="selectSell" resultMap="BaseResultMap" parameterType="com.happy.otc.bifutures.pojo.FuturesStrategyQuery" resultType="list" >
+    select
+    *
+    from __fu_strategy
+    <include refid="PAGE_WHERE"/>
+
+    ORDER BY __cancel_time DESC,__sell_deal_time DESC
+
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from __fu_strategy
+    where __id = #{id,jdbcType=BIGINT}
+  </delete>
+  <select id="selectAmount" parameterType="com.happy.otc.bifutures.pojo.FuturesStrategyQuery" resultType="Integer" >
+    select
+    SUM(__amount)
+    from __fu_strategy
+    <include refid="PAGE_WHERE"/>
+  </select>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.happy.otc.bifutures.dto.FuturesStrategyDto" >
+    insert into __fu_strategy (
+    __user_id,__username, __bi_code, __buy_price_order,__buy_price_deal,__sell_price_deal,__contractValue,
+    __amount, __type,__status,__mold,__direction,__principal,__gain_price,__loss_price,__close_price,
+    __service_charge,__defer_charge,__is_defer,__is_today,__close_reason,__cancel_reason,
+    __buy_deal_time,__buy_order_time,__sell_deal_time,__cancel_time,__remark)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{biCode,jdbcType=VARCHAR},
+    #{buyPriceOrder,jdbcType=DECIMAL},#{buyPriceDeal,jdbcType=DECIMAL},#{sellPriceDeal,jdbcType=DECIMAL},#{contractValue,jdbcType=DECIMAL},
+    #{amount,jdbcType=BIGINT},#{type,jdbcType=INTEGER},#{status,jdbcType=INTEGER},
+    #{mold,jdbcType=INTEGER},#{direction,jdbcType=VARCHAR},#{principal,jdbcType=DECIMAL},
+    #{gainPrice,jdbcType=DECIMAL},#{lossPrice,jdbcType=DECIMAL},#{closePrice,jdbcType=DECIMAL},
+    #{serviceCharge,jdbcType=DECIMAL},#{deferCharge,jdbcType=DECIMAL},#{isDefer,jdbcType=INTEGER},
+    #{isToday,jdbcType=INTEGER},#{closeReason,jdbcType=VARCHAR},#{cancelReason,jdbcType=VARCHAR},
+    #{buyDealTime,jdbcType=TIMESTAMP}, #{buyOrderTime,jdbcType=TIMESTAMP}, #{sellDealTime,jdbcType=TIMESTAMP},
+    #{cancelTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <update id="update" parameterType="com.happy.otc.bifutures.dto.FuturesStrategyDto" >
+    update __fu_strategy
+    <set >
+      <if test="userId != null" >
+        __user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        __username = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="biCode != null" >
+        __bi_code = #{biCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyPriceOrder != null" >
+        __buy_price_order = #{buyPriceOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="buyPriceDeal != null" >
+        __buy_price_deal = #{buyPriceDeal,jdbcType=DECIMAL},
+      </if>
+      <if test="sellPriceDeal != null" >
+        __sell_price_deal = #{sellPriceDeal,jdbcType=DECIMAL},
+      </if>
+      <if test="contractValue != null" >
+        __contractValue = #{contractValue,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        __amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        __type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        __status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="mold != null" >
+        __mold = #{mold,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        __direction = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        __principal = #{principal,jdbcType=DECIMAL},
+      </if>
+      <if test="gainPrice != null" >
+        __gain_price = #{gainPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lossPrice != null" >
+        __loss_price = #{lossPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="closePrice != null" >
+        __close_price = #{closePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceCharge != null" >
+        __service_charge =  #{serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="deferCharge != null" >
+        __defer_charge = #{deferCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefer != null" >
+        __is_defer = #{isDefer,jdbcType=INTEGER},
+      </if>
+      <if test="isToday != null" >
+        __is_today = #{isToday,jdbcType=INTEGER},
+      </if>
+      <if test="closeReason != null" >
+        __close_reason = #{closeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelReason != null" >
+        __cancel_reason = #{cancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="buyDealTime != null" >
+        __buy_deal_time = #{buyDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyOrderTime != null" >
+        __buy_order_time = #{buyOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellDealTime != null" >
+        __sell_deal_time = #{sellDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancelTime != null" >
+        __cancel_time = #{cancelTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        __remark = #{remark,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where __id = #{id,jdbcType=BIGINT}
+  </update>
+  <sql id="PAGE_WHERE">
+    <where>
+      <if test="id != null">
+        __id=#{id}
+      </if>
+      <if test="userId != null">
+        AND __user_id=#{userId}
+      </if>
+      <if test="biCode != null">
+        AND __bi_code = #{biCode}
+      </if>
+      <if test="type != null">
+        AND __type=#{type}
+      </if>
+      <if test="status!=null and status.size()>0">
+        <choose>
+          <when test="status.size()==1">
+            AND __status=#{status[0]}
+          </when>
+          <otherwise>
+            AND __status IN
+            <foreach collection="status" open="(" close=")" separator=","
+                     item="item">
+              #{item}
+            </foreach>
+          </otherwise>
+        </choose>
+      </if>
+      <if test="statu != null">
+        AND __status=#{statu}
+      </if>
+      <if test="mold != null">
+        AND __mold = #{mold,jdbcType=INTEGER}
+      </if>
+      <if test="direction != null">
+        AND __direction = #{direction,jdbcType=VARCHAR}
+      </if>
+      <if test="isDefer != null">
+        AND __is_defer = #{isDefer,jdbcType=INTEGER}
+      </if>
+      <if test="isToday != null">
+        AND __is_today = #{isToday,jdbcType=INTEGER}
+      </if>
+      <if test="leInitiateTime != null">
+        <![CDATA[
+				AND __buy_order_time>=#{leInitiateTime}
+				]]>
+      </if>
+      <if test="geInitiateTime != null">
+        <![CDATA[
+				AND __buy_order_time<=#{geInitiateTime}
+				]]>
+      </if>
+      <if test="leSellTime != null">
+        <![CDATA[
+				AND __sell_deal_time>=#{leSellTime}
+				]]>
+      </if>
+      <if test="geSellTime != null">
+        <![CDATA[
+				AND __sell_deal_time<=#{geSellTime}
+				]]>
+      </if>
+      <if test="principal == null">
+        <![CDATA[
+			 AND	__principal > 1
+				]]>
+      </if>
+    </where>
+  </sql>
+
+  <select id="getNewPepal"  parameterType="com.happy.otc.bifutures.pojo.TimeQuery" resultType="Integer" >
+    SELECT
+    COUNT(DISTINCT __user_id)
+    FROM
+    __fu_strategy
+    WHERE
+    __user_id not in(SELECT __user_id FROM __fu_strategy WHERE  <![CDATA[ __buy_order_time<#{leSellTime}]]>)
+    <if test="leSellTime != null">
+      <![CDATA[
+				AND __buy_order_time>=#{leSellTime}
+				]]>
+    </if>
+    <if test="geSellTime != null">
+      <![CDATA[
+				AND __buy_order_time<=#{geSellTime}
+				]]>
+    </if>
+
+  </select>
+
+  <select id="selectYHS" resultType="Integer" parameterType="com.happy.otc.bifutures.pojo.TimeQuery" >
+    select
+    count( DISTINCT __user_id)
+    from __fu_strategy
+    <include refid="PAGE_WHERE_TIME"/>
+  </select>
+  <select id="selectJYSL" resultType="Integer" parameterType="com.happy.otc.bifutures.pojo.TimeQuery" >
+    select
+    SUM( __amount)
+    from __fu_strategy
+    <include refid="PAGE_WHERE_TIME"/>
+  </select>
+
+  <sql id="PAGE_WHERE_TIME">
+    <where>
+      <if test="biCode != null">
+        AND __bi_code = #{biCode}
+      </if>
+      <if test="leSellTime != null">
+        <![CDATA[
+				AND __buy_order_time>=#{leSellTime}
+				]]>
+      </if>
+      <if test="geSellTime != null">
+        <![CDATA[
+				AND __buy_order_time<=#{geSellTime}
+				]]>
+      </if>
+    </where>
+  </sql>
+</mapper>

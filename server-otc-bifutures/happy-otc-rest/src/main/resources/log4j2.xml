@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Properties>
+		<property name="baseDir">../logs</property>
+		<property name="appName">otc</property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+		</Console>
+
+		<!--<kafka name="Kafka" topic="logs">-->
+			<!--<PatternLayout pattern="${appName}===%d{yyyy-MM-dd HH:mm:ss.SSS}===%4p===%t===%logger{36}=== %msg%n" />-->
+			<!--<Property name="bootstrap.servers">@bootstrap.servers@</Property>-->
+		<!--</kafka>-->
+
+		<!-- 文件输出 error级别及以上日志 -->
+		<RollingRandomAccessFile name="FileErrorLog"
+								 fileName="${baseDir}/${appName}_error.log"
+								 filePattern="${baseDir}/${appName}_log_back/error/$${date:yyyy-MM}/%d{yyyy-MM-dd}-%i.error.log.gz">
+			<ThresholdFilter level="error" onMatch="ACCEPT"
+							 onMismatch="DENY" />
+			<PatternLayout pattern="[%d{DEFAULT}] [%-5level] [%t] [%l] - %msg%xEx%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingRandomAccessFile>
+
+		<Async name="Async">
+			<AppenderRef ref="FileErrorLog" />
+			<!--<AppenderRef ref="Kafka"/>-->
+			<AppenderRef ref="Console" />
+		</Async>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="Async"/>
+		</Root>
+	</Loggers>
+
+</Configuration>

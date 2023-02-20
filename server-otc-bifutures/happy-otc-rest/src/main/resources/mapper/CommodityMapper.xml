@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.Commodity" >
+    <id column="commodity_id" property="commodityId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="relevant_kind" property="relevantKind" jdbcType="VARCHAR" />
+    <result column="currency_price" property="currencyPrice" jdbcType="DECIMAL" />
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+    <result column="minimum_amount" property="minimumAmount" jdbcType="DECIMAL" />
+    <result column="maximum_amount" property="maximumAmount" jdbcType="DECIMAL" />
+    <result column="currency_quantity" property="currencyQuantity" jdbcType="DECIMAL" />
+    <result column="frozen_quantity" property="frozenQuantity" jdbcType="DECIMAL" />
+    <result column="fee_quantity" property="feeQuantity" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="commodity_type" property="commodityType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="version_number" property="versionNumber" jdbcType="INTEGER" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="pay_method_list" property="payMethodList" jdbcType="VARCHAR" />
+    <result column="leave_message" property="leaveMessage" jdbcType="VARCHAR" />
+    <result column="trade_curb" property="tradeCurb" jdbcType="VARCHAR" />
+    <result column="trade_time_type" property="tradeTimeType" jdbcType="INTEGER" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_method_type_list" property="payMethodTypeList" jdbcType="VARCHAR" />
+    <result column="trade_method" property="tradeMethod" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="CommodityResultMap" type="com.happy.otc.vo.CommodityInfoVO" >
+    <id column="commodity_id" property="commodityId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="relevant_kind" property="relevantKind" jdbcType="VARCHAR" />
+    <result column="currency_price" property="currencyPrice" jdbcType="DECIMAL" />
+    <result column="frozen_quantity" property="frozenQuantity" jdbcType="DECIMAL" />
+    <result column="fee_quantity" property="feeQuantity" jdbcType="DECIMAL" />
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+    <result column="minimum_amount" property="minimumAmount" jdbcType="DECIMAL" />
+    <result column="maximum_amount" property="maximumAmount" jdbcType="DECIMAL" />
+    <result column="currency_quantity" property="currencyQuantity" jdbcType="DECIMAL" />
+    <result column="commodity_type" property="commodityType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="version_number" property="versionNumber" jdbcType="INTEGER" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="pay_method_list" property="payMethodList" jdbcType="VARCHAR" />
+    <result column="leave_message" property="leaveMessage" jdbcType="VARCHAR" />
+    <result column="trade_curb" property="tradeCurb" jdbcType="VARCHAR" />
+    <result column="trade_time_type" property="tradeTimeType" jdbcType="INTEGER" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_method_type_list" property="payMethodTypeList" jdbcType="VARCHAR" />
+    <result column="trade_method" property="tradeMethod" jdbcType="INTEGER" />
+    <!--capital_detail_count-->
+    <result column="close_rate" property="closeRate" jdbcType="DOUBLE" />
+    <result column="success_trade_count" property="successTradeCount" jdbcType="BIGINT" />
+    <result column="total_trade_count" property="totalTradeCount" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    commodity_id, user_id, relevant_kind, currency_price, kind, minimum_amount, maximum_amount, 
+    currency_quantity, frozen_quantity, fee_quantity, status, commodity_type, create_time, 
+    update_time, is_deleted, version_number, currency_id, pay_method_list, leave_message, 
+    trade_curb, trade_time_type, country, pay_time, pay_method_type_list, trade_method, 
+    version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from commodity
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from commodity
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.Commodity" >
+    insert into commodity (commodity_id, user_id, relevant_kind, 
+      currency_price, kind, minimum_amount, 
+      maximum_amount, currency_quantity, frozen_quantity, 
+      fee_quantity, status, commodity_type, 
+      create_time, update_time, is_deleted, 
+      version_number, currency_id, pay_method_list, 
+      leave_message, trade_curb, trade_time_type, 
+      country, pay_time, pay_method_type_list, 
+      trade_method, version)
+    values (#{commodityId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{relevantKind,jdbcType=VARCHAR}, 
+      #{currencyPrice,jdbcType=DECIMAL}, #{kind,jdbcType=VARCHAR}, #{minimumAmount,jdbcType=DECIMAL}, 
+      #{maximumAmount,jdbcType=DECIMAL}, #{currencyQuantity,jdbcType=DECIMAL}, #{frozenQuantity,jdbcType=DECIMAL}, 
+      #{feeQuantity,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{commodityType,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, 
+      #{versionNumber,jdbcType=INTEGER}, #{currencyId,jdbcType=BIGINT}, #{payMethodList,jdbcType=VARCHAR}, 
+      #{leaveMessage,jdbcType=VARCHAR}, #{tradeCurb,jdbcType=VARCHAR}, #{tradeTimeType,jdbcType=INTEGER}, 
+      #{country,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{payMethodTypeList,jdbcType=VARCHAR}, 
+      #{tradeMethod,jdbcType=INTEGER}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.Commodity"
+          keyProperty="commodityId" useGeneratedKeys="true">
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="relevantKind != null" >
+        relevant_kind,
+      </if>
+      <if test="currencyPrice != null" >
+        currency_price,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="minimumAmount != null" >
+        minimum_amount,
+      </if>
+      <if test="maximumAmount != null" >
+        maximum_amount,
+      </if>
+      <if test="currencyQuantity != null" >
+        currency_quantity,
+      </if>
+      <if test="frozenQuantity != null" >
+        frozen_quantity,
+      </if>
+      <if test="feeQuantity != null" >
+        fee_quantity,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="commodityType != null" >
+        commodity_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="versionNumber != null" >
+        version_number,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="payMethodList != null" >
+        pay_method_list,
+      </if>
+      <if test="leaveMessage != null" >
+        leave_message,
+      </if>
+      <if test="tradeCurb != null" >
+        trade_curb,
+      </if>
+      <if test="tradeTimeType != null" >
+        trade_time_type,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="payMethodTypeList != null" >
+        pay_method_type_list,
+      </if>
+      <if test="tradeMethod != null" >
+        trade_method,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="relevantKind != null" >
+        #{relevantKind,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyPrice != null" >
+        #{currencyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumAmount != null" >
+        #{minimumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="maximumAmount != null" >
+        #{maximumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyQuantity != null" >
+        #{currencyQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenQuantity != null" >
+        #{frozenQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="feeQuantity != null" >
+        #{feeQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="commodityType != null" >
+        #{commodityType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="versionNumber != null" >
+        #{versionNumber,jdbcType=INTEGER},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="payMethodList != null" >
+        #{payMethodList,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveMessage != null" >
+        #{leaveMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeCurb != null" >
+        #{tradeCurb,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTimeType != null" >
+        #{tradeTimeType,jdbcType=INTEGER},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMethodTypeList != null" >
+        #{payMethodTypeList,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeMethod != null" >
+        #{tradeMethod,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.Commodity" >
+    update commodity
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="relevantKind != null" >
+        relevant_kind = #{relevantKind,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyPrice != null" >
+        currency_price = #{currencyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumAmount != null" >
+        minimum_amount = #{minimumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="maximumAmount != null" >
+        maximum_amount = #{maximumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyQuantity != null" >
+        currency_quantity = #{currencyQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenQuantity != null" >
+        frozen_quantity = #{frozenQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="feeQuantity != null" >
+        fee_quantity = #{feeQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="commodityType != null" >
+        commodity_type = #{commodityType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="versionNumber != null" >
+        version_number = #{versionNumber,jdbcType=INTEGER},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="payMethodList != null" >
+        pay_method_list = #{payMethodList,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveMessage != null" >
+        leave_message = #{leaveMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeCurb != null" >
+        trade_curb = #{tradeCurb,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeTimeType != null" >
+        trade_time_type = #{tradeTimeType,jdbcType=INTEGER},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMethodTypeList != null" >
+        pay_method_type_list = #{payMethodTypeList,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeMethod != null" >
+        trade_method = #{tradeMethod,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER} + 1,
+      </if>
+    </set>
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+        and  version = #{version,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.Commodity" >
+    update commodity
+    set user_id = #{userId,jdbcType=BIGINT},
+      relevant_kind = #{relevantKind,jdbcType=VARCHAR},
+      currency_price = #{currencyPrice,jdbcType=DECIMAL},
+      kind = #{kind,jdbcType=VARCHAR},
+      minimum_amount = #{minimumAmount,jdbcType=DECIMAL},
+      maximum_amount = #{maximumAmount,jdbcType=DECIMAL},
+      currency_quantity = #{currencyQuantity,jdbcType=DECIMAL},
+      frozen_quantity = #{frozenQuantity,jdbcType=DECIMAL},
+      fee_quantity = #{feeQuantity,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      commodity_type = #{commodityType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      version_number = #{versionNumber,jdbcType=INTEGER},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      pay_method_list = #{payMethodList,jdbcType=VARCHAR},
+      leave_message = #{leaveMessage,jdbcType=VARCHAR},
+      trade_curb = #{tradeCurb,jdbcType=VARCHAR},
+      trade_time_type = #{tradeTimeType,jdbcType=INTEGER},
+      country = #{country,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_method_type_list = #{payMethodTypeList,jdbcType=VARCHAR},
+      trade_method = #{tradeMethod,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER}
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByParam" resultMap="CommodityResultMap" parameterType="java.util.Map">
+  SELECT
+  c.commodity_id, c.user_id, c.relevant_kind, c.currency_price, c.kind, c.minimum_amount, c.maximum_amount,
+  c.currency_quantity, c.frozen_quantity, c.fee_quantity, c.version_number,c.create_time,c.currency_id,
+  c.pay_method_list,c.pay_method_type_list,c.trade_curb,c.trade_method,cdc.close_rate,cdc.success_trade_count,
+  c.commodity_type,cdc.total_trade_count
+  FROM
+  commodity c
+  LEFT JOIN capital_detail_count cdc ON c.user_id = cdc.user_id
+  where 1 = 1
+  <if test="commodityType!=null">
+    AND c.commodity_type = #{commodityType}
+  </if>
+  <if test="status!=null">
+    AND c.status = #{status}
+  </if>
+  <if test="userId!=null">
+    AND c.user_id = #{userId}
+  </if>
+  <if test="kind!=null">
+    AND c.kind = #{kind}
+  </if>
+  <if test="relevantKind!=null">
+    AND c.relevant_kind = #{relevantKind}
+  </if>
+
+  <if test="start!=null">
+    AND c.update_time >= #{start}
+  </if>
+  <if test="end!=null">
+    AND #{end} >= c.update_time
+  </if>
+    <if test="tradeMethod!=null">
+      AND c.trade_method = #{tradeMethod}
+    </if>
+  <if test="ignoreUserIds != null and ignoreUserIds.size() > 0">
+    and c.user_id not in
+    <foreach item="item" index="index" collection="ignoreUserIds"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </if>
+  <if test="hasQuantity != null and hasQuantity">
+    and c.currency_quantity > 0
+  </if>
+  <if test="minMoney != null">
+      AND #{minMoney} BETWEEN c.minimum_amount
+      AND c.maximum_amount
+  </if>
+  <if test="payType != null">
+      and c.pay_method_type_list like "%"#{payType}"%"
+  </if>
+  <choose>
+    <when test="commodityType!=null and commodityType == 1">
+      ORDER BY c.currency_price
+    </when>
+    <when test="commodityType!=null and commodityType == 0">
+      ORDER BY c.currency_price desc
+    </when>
+    <otherwise>
+      ORDER BY c.commodity_id desc
+    </otherwise>
+  </choose>
+</select>
+<update id="updateQuantity">
+  update commodity
+  set currency_quantity = currency_quantity + #{currencyQuantity},
+  frozen_quantity = frozen_quantity + #{frozenQuantity},
+  fee_quantity = fee_quantity + #{feeQuantity},
+  update_time = CURRENT_TIMESTAMP,
+  version = version + 1
+  where commodity_id = #{commodityId}
+      and  version = #{version}
+</update>
+
+  <select id="countCommodity" resultType="long" parameterType="java.util.Map">
+    SELECT
+      count(c.commodity_id)
+    FROM
+    commodity c
+    where 1 = 1
+    <if test="commodityType!=null">
+      AND c.commodity_type = #{commodityType}
+    </if>
+    <if test="status!=null">
+      AND c.status = #{status}
+    </if>
+    <if test="userId!=null">
+      AND c.user_id = #{userId}
+    </if>
+    <if test="kind!=null">
+      AND c.kind = #{kind}
+    </if>
+    <if test="relevantKind!=null">
+      AND c.relevant_kind = #{relevantKind}
+    </if>
+
+  </select>
+</mapper>

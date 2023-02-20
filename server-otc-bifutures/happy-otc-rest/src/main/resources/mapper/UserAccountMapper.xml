@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.UserAccountMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.UserAccount" >
+    <id column="user_account_id" property="userAccountId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.happy.otc.entity.UserAccount" extends="BaseResultMap" >
+    <result column="payment_detail" property="paymentDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_account_id, user_id, real_name, account, address, pay_type, pay_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    payment_detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_account
+    where user_account_id = #{userAccountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_account
+    where user_account_id = #{userAccountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.UserAccount" >
+    insert into user_account (user_account_id, user_id, real_name, 
+      account, address, pay_type, 
+      pay_status, payment_detail)
+    values (#{userAccountId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR}, 
+      #{account,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER}, 
+      #{payStatus,jdbcType=INTEGER}, #{paymentDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.UserAccount"
+          keyProperty="userAccountId" useGeneratedKeys="true">
+    insert into user_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userAccountId != null" >
+        user_account_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="paymentDetail != null" >
+        payment_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userAccountId != null" >
+        #{userAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentDetail != null" >
+        #{paymentDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.UserAccount" >
+    update user_account
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentDetail != null" >
+        payment_detail = #{paymentDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where user_account_id = #{userAccountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.happy.otc.entity.UserAccount" >
+    update user_account
+    set user_id = #{userId,jdbcType=BIGINT},
+      real_name = #{realName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=INTEGER},
+      pay_status = #{payStatus,jdbcType=INTEGER},
+      payment_detail = #{paymentDetail,jdbcType=LONGVARCHAR}
+    where user_account_id = #{userAccountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.UserAccount" >
+    update user_account
+    set user_id = #{userId,jdbcType=BIGINT},
+      real_name = #{realName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=INTEGER},
+      pay_status = #{payStatus,jdbcType=INTEGER}
+    where user_account_id = #{userAccountId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByParam" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_account
+    where 1=1
+    <if test="userId!=null">
+      AND user_id = #{userId}
+    </if>
+    <if test="payType!=null">
+      AND pay_type = #{payType}
+    </if>
+  </select>
+</mapper>

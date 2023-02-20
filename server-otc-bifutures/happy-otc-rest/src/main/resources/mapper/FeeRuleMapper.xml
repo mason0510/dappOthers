@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.FeeRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.FeeRule" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="currency_id" property="currencyId" jdbcType="BIGINT" />
+    <result column="fee_type" property="feeType" jdbcType="TINYINT" />
+    <result column="fee_number" property="feeNumber" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, currency_id, fee_type, fee_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fee_rule
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fee_rule
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.FeeRule" >
+    insert into fee_rule (id, type, currency_id, 
+      fee_type, fee_number)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{currencyId,jdbcType=BIGINT}, 
+      #{feeType,jdbcType=TINYINT}, #{feeNumber,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.FeeRule" >
+    insert into fee_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="currencyId != null" >
+        currency_id,
+      </if>
+      <if test="feeType != null" >
+        fee_type,
+      </if>
+      <if test="feeNumber != null" >
+        fee_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="currencyId != null" >
+        #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=TINYINT},
+      </if>
+      <if test="feeNumber != null" >
+        #{feeNumber,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.FeeRule" >
+    update fee_rule
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="currencyId != null" >
+        currency_id = #{currencyId,jdbcType=BIGINT},
+      </if>
+      <if test="feeType != null" >
+        fee_type = #{feeType,jdbcType=TINYINT},
+      </if>
+      <if test="feeNumber != null" >
+        fee_number = #{feeNumber,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.FeeRule" >
+    update fee_rule
+    set type = #{type,jdbcType=INTEGER},
+      currency_id = #{currencyId,jdbcType=BIGINT},
+      fee_type = #{feeType,jdbcType=TINYINT},
+      fee_number = #{feeNumber,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from fee_rule
+    <where>
+      <if test="id != null">
+        id = #{id}
+      </if>
+      <if test="type != null">
+        and type = #{type}
+      </if>
+      <if test="currencyId != null">
+        and currency_id = #{currencyId}
+      </if>
+    </where>
+  </select>
+</mapper>

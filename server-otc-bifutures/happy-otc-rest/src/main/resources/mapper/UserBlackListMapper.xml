@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.UserBlackListMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.entity.UserBlackList" >
+    <id column="black_list_id" property="blackListId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="target_id" property="targetId" jdbcType="BIGINT" />
+    <result column="target_name" property="targetName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    black_list_id, user_id, target_id, target_name, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_black_list
+    where black_list_id = #{blackListId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_black_list
+    where black_list_id = #{blackListId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.entity.UserBlackList" >
+    insert into user_black_list (black_list_id, user_id, target_id, 
+      target_name, create_time)
+    values (#{blackListId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{targetId,jdbcType=BIGINT}, 
+      #{targetName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.happy.otc.entity.UserBlackList" >
+    insert into user_black_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blackListId != null" >
+        black_list_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
+      <if test="targetName != null" >
+        target_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blackListId != null" >
+        #{blackListId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=BIGINT},
+      </if>
+      <if test="targetName != null" >
+        #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.happy.otc.entity.UserBlackList" >
+    update user_black_list
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=BIGINT},
+      </if>
+      <if test="targetName != null" >
+        target_name = #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where black_list_id = #{blackListId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.happy.otc.entity.UserBlackList" >
+    update user_black_list
+    set user_id = #{userId,jdbcType=BIGINT},
+      target_id = #{targetId,jdbcType=BIGINT},
+      target_name = #{targetName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where black_list_id = #{blackListId,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteSelective" parameterType="com.happy.otc.entity.UserBlackList" >
+    delete from user_black_list
+    <where>
+      <if test="blackListId != null" >
+        black_list_id = #{blackListId,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="targetId != null" >
+        and target_id = #{targetId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </delete>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from user_black_list
+    <where>
+      <if test="blackListId != null" >
+        black_list_id = #{blackListId,jdbcType=BIGINT}
+      </if>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="targetId != null" >
+        and target_id = #{targetId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
+  <select id="selectAllTargetIdByUserId" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select target_id from user_black_list
+    where user_id = #{userId,jdbcType=BIGINT}
+    union
+    select user_id from user_black_list
+    where target_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

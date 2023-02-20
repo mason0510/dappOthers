@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.happy.otc.dao.BiFuturesUserAssetsMapper" >
+  <resultMap id="BaseResultMap" type="com.happy.otc.bifutures.entity.UserAssets" >
+    <result column="__user_id" property="userId" jdbcType="BIGINT" />
+    <result column="__balance" property="balance" jdbcType="DECIMAL" />
+    <result column="__fund_in" property="fundIn" jdbcType="DECIMAL" />
+    <result column="__fund_out" property="fundOut" jdbcType="DECIMAL" />
+    <result column="__time" property="time" jdbcType="TIMESTAMP" />
+    <result column="__version" property="version" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    __user_id, __balance, __fund_in, __fund_out, __time, __version
+  </sql>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from __fu_assets
+    where __user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByUserId" parameterType="java.lang.Long" >
+    delete from __fu_assets
+    where __user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.happy.otc.bifutures.dto.UserAssetsDto" >
+    insert into __fu_assets (__user_id, __balance, __fund_in,
+      __fund_out, __time)
+    values (#{userId,jdbcType=BIGINT}, #{balance,jdbcType=DECIMAL}, #{fundIn,jdbcType=DECIMAL},
+      #{fundOut,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateAssetsByUserAssetsDto" parameterType="com.happy.otc.bifutures.dto.UserAssetsDto" >
+    update __fu_assets
+    <set >
+      <if test="balance != null" >
+        __balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="fundIn != null" >
+        __fund_in = #{fundIn,jdbcType=DECIMAL},
+      </if>
+      <if test="fundOut != null" >
+        __fund_out = #{fundOut,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        __time = #{time,jdbcType=TIMESTAMP},
+      </if>
+
+    </set>
+    where __user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getTotalFundIn" resultType="BigDecimal" >
+    select
+    SUM(__fund_in)
+    from __fu_assets
+    <include refid="PAGE_WHERE_TIME"/>
+  </select>
+  <select id="getTotalFundOut" resultType="BigDecimal" >
+    select
+    SUM(__fund_out)
+    from __fu_assets
+    <include refid="PAGE_WHERE_TIME"/>
+  </select>
+
+  <sql id="PAGE_WHERE_TIME">
+    <where>
+      <if test="biCode != null">
+        AND __bi_code = #{biCode}
+      </if>
+      <if test="leSellTime != null">
+        <![CDATA[
+				AND __time>=#{leSellTime}
+				]]>
+      </if>
+      <if test="geSellTime != null">
+        <![CDATA[
+				AND __time<=#{geSellTime}
+				]]>
+      </if>
+    </where>
+  </sql>
+</mapper>

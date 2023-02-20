@@ -1,0 +1,7 @@
+/.settings/
+/.project
+
+*/target
+.idea
+*.iml
+/logs/
